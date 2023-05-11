@@ -3,7 +3,10 @@ import "./OrderForm.css";
 import productImage from "../../assets/chiaseed-img.jpeg";
 
 const OrderForm = () => {
+
   const [plus, setPlus] = useState(1);
+  
+  const [districtValue, setDistrictValue] = useState("")
 
   const plusButton = () => {
     setPlus(plus + 1);
@@ -13,66 +16,106 @@ const OrderForm = () => {
     setPlus(plus - 1);
   };
 
+  const setDistrictHandler = (event) => {
+
+     const form = event.target;
+
+     const district = form.district.value;
+      
+     console.log(district)
+
+  }
+
+  const orderForm = (event) =>{
+    event.preventDefault()
+  }
+
+  
+
   return (
     <div className="mx-5 lg:mx-40 xl:mx-40 md:mx-10 my-10 border-2">
       <div className="p-1">
         {/* orderSection headline */}
 
         <div className=" p-2">
+
           <div className="bg-yellow-300 test mx-0 lg:mx-10 xl:mx-10 md:mx-10">
+
             <h1 className="text-center text-2xl lg:text-3xl md:3xl xl:3xl p-2 font-semibold">
               অর্ডার করতে নিচের ফর্মটি সম্পূর্ণ পূরন করুন
             </h1>
+
           </div>
 
           {/* order Form */}
 
-          <form className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 xl:grid-cols-2">
+          <form onClick={orderForm} className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 xl:grid-cols-2">
             {/* form start */}
 
             <div>
               <p className="mt-4 mb-2 font-semibold">আপনার নাম *</p>
               <input
                 type="text"
+                name="name"
                 placeholder="আপনার নাম *"
                 className="input input-bordered w-full"
               />
 
               <p className="mt-2 mb-2 font-semibold">ফোন নম্বর*</p>
+
               <input
                 type="text"
+                name="number"
                 placeholder="ফোন নম্বর*"
                 className="input input-bordered w-full mb-2"
               />
 
               <p className="mt-2 mb-2 font-semibold">
+
                 বাসা/রোড নাম্বার, এলাকার নাম, থানা নাম *
+
               </p>
+
               <input
                 type="text"
+                name="homeAdress"
                 placeholder="বাসা/রোড নাম্বার, এলাকার নাম, থানা নাম *"
                 className="input input-bordered w-full mb-2"
               />
 
               <p className="mt-2 mb-2 font-semibold">
+
                 আপনার জেলা সিলেক্ট করুন*
+
               </p>
-              <select className="select select-bordered w-full mb-2">
+
+              <select onClick={() => setDistrictHandler ()}  name="district" className="select select-bordered w-full mb-2">
+
                 <option disabled selected>
+
                   আপনার জেলা সিলেক্ট করুন*
+
                 </option>
-                <option>Han Solo</option>
-                <option>Greedo</option>
+                 
+                <option value="dhaka"> Dhaka </option>
+
+                <option value="Out Side Dhaka"> Out Side Dhaka </option>
+
               </select>
 
               <p className="mt-2 mb-2 font-semibold">আপনার শহর সিলেক্ট করুন*</p>
+               
               <select className="select select-bordered w-full mb-2">
+
                 <option disabled selected>
                   আপনার শহর সিলেক্ট করুন*
                 </option>
+
                 <option>Han Solo</option>
                 <option>Greedo</option>
+
               </select>
+
             </div>
 
             {/* product price show */}
