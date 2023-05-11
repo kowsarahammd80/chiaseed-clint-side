@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import TimeChiaCardMap from "./TimeChiaCardMap";
 
+
 const TimeChia = () => {
+  
   const [cardDetails, setCardDetails] = useState([]);
 
   useEffect(() => {
@@ -15,6 +17,7 @@ const TimeChia = () => {
   }, []);
 
   return (
+
     <div className="mx-5 lg:mx-40 xl:mx-40 md:mx-10">
       <h1 className="my-5 text-center text-3xl text-green-700 lg:text-4xl xl:text-4xl font-semibold">
         নিয়মিত চিয়া সিড কেন খাবেন ? এবং পুষ্টিগুণ কি ?
@@ -53,7 +56,9 @@ const TimeChia = () => {
       </div>
 
     </div>
+
   );
+
 };
 
 export default TimeChia;

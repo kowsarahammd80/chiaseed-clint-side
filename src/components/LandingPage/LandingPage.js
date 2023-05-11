@@ -2,6 +2,8 @@ import React from 'react';
 import HeroSection from '../HeroSection/HeroSection';
 import TimeChia from '../TimeChia/TimeChia';
 import WhyFromTackUs from '../WhyFromTackUs/WhyFromTackUs';
+import Product from '../Product/Product';
+import OrderForm from '../OrderForm/OrderForm';
 
 const LandingPage = () => {
 
@@ -12,6 +14,8 @@ const LandingPage = () => {
        <HeroSection/>
        <TimeChia/>
        <WhyFromTackUs/>
+       <Product/>
+       <OrderForm/>
 
     </div>
     
