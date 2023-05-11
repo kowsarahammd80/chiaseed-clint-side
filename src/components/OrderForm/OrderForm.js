@@ -18,11 +18,10 @@ const OrderForm = () => {
 
   const setDistrictHandler = (event) => {
 
-     const form = event.target;
 
-     const district = form.district.value;
-      
-     console.log(district)
+     setDistrictValue(event.target.value)
+     
+     console.log(districtValue)
 
   }
 
@@ -89,7 +88,7 @@ const OrderForm = () => {
 
               </p>
 
-              <select onClick={() => setDistrictHandler ()}  name="district" className="select select-bordered w-full mb-2">
+              <select onChange={setDistrictHandler}  name="district" className="select select-bordered w-full mb-2">
 
                 <option disabled selected>
 
@@ -199,6 +198,7 @@ const OrderForm = () => {
                       <td className="border p-2">শিপিং</td>
 
                       <td className="border p-2">
+                        
                         <div className="">
                           <input type="radio" className="mr-1" />
                           <label htmlFor="" className="">
