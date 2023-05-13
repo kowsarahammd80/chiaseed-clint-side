@@ -44,7 +44,7 @@ const Navbar = () => {
             <ul className="menu menu-horizontal px-1"></ul>
           </div>
           <div className="navbar-end">
-            <a className="mr-0 lg:mr-32 xl:mr-32 md:mr-5 font-semibold flex items-center text-green-600 cursor-pointer" ><i class="fa-brands fa-whatsapp text-4xl mr-2 "></i> 01760075031</a>
+            <a href="https://wa.me/+8801760075031" className="mr-0 lg:mr-32 xl:mr-32 md:mr-5 font-semibold flex items-center text-green-600 cursor-pointer" ><i class="fa-brands fa-whatsapp text-4xl mr-2 "></i> 01760075031</a>
           </div>
         </div>
       </div>

@@ -8,6 +8,21 @@ const OrderForm = () => {
   
   const [districtValue, setDistrictValue] = useState("")
 
+  console.log(districtValue)
+
+  const [deliveryCharge, setDeliveryCharge] = useState(districtValue === 
+  "Dhaka" ? 130 : 60 )
+
+  // setDeliveryCharge(deliveryCharge)
+
+  console.log(deliveryCharge)
+
+  // const deliveryHandler = (e) => {
+
+  //   setDeliveryCharge(e.target.value)
+    
+  // }
+
   const plusButton = () => {
     setPlus(plus + 1);
   };
@@ -16,17 +31,26 @@ const OrderForm = () => {
     setPlus(plus - 1);
   };
 
-  const setDistrictHandler = (event) => {
+  // const setDistrictHandler = (event) => {
 
 
-     setDistrictValue(event.target.value)
+  //    setDistrictValue(event.target.value)
      
-     console.log(districtValue)
+  //    console.log(districtValue)
 
-  }
+  // }
 
   const orderForm = (event) =>{
     event.preventDefault()
+
+    // const form = event.target;
+    // const name = form.name.value;
+    // const number = form.number.value;
+    // const homeAddress = form.homeAddress.value;
+    // const 
+
+    
+
   }
 
   
@@ -77,7 +101,7 @@ const OrderForm = () => {
 
               <input
                 type="text"
-                name="homeAdress"
+                name="homeAddress"
                 placeholder="বাসা/রোড নাম্বার, এলাকার নাম, থানা নাম *"
                 className="input input-bordered w-full mb-2"
               />
@@ -88,30 +112,45 @@ const OrderForm = () => {
 
               </p>
 
-              <select onChange={setDistrictHandler}  name="district" className="select select-bordered w-full mb-2">
+              <select onChange={(e) => setDistrictValue(e.target.value)}  className="select select-bordered w-full mb-2">
 
-                <option disabled selected>
+                <option  selected>
 
                   আপনার জেলা সিলেক্ট করুন*
 
                 </option>
                  
-                <option value="dhaka"> Dhaka </option>
+               
 
-                <option value="Out Side Dhaka"> Out Side Dhaka </option>
+                <option value="Barisal"> Barisal </option>
+
+                <option value="Dhaka"> Dhaka </option>
+
+                <option value="Chadpur"> Chadpur </option>
+
+                <option value="Khulna"> Khulna </option>
+
+                <option value="Comilla"> Comilla </option>
 
               </select>
 
               <p className="mt-2 mb-2 font-semibold">আপনার শহর সিলেক্ট করুন*</p>
                
-              <select className="select select-bordered w-full mb-2">
+              <select  className="select select-bordered w-full mb-2">
 
                 <option disabled selected>
                   আপনার শহর সিলেক্ট করুন*
                 </option>
 
-                <option>Han Solo</option>
-                <option>Greedo</option>
+                <option value="Dhaka"> Dhaka </option>
+
+                <option value="Barisal"> Barisal </option>
+
+                <option value="Chadpur"> Chadpur </option>
+
+                <option value="Khulna"> Khulna </option>
+
+                <option value="Comilla"> Comilla </option>
 
               </select>
 
@@ -200,17 +239,27 @@ const OrderForm = () => {
                       <td className="border p-2">
                         
                         <div className="">
-                          <input type="radio" className="mr-1" />
+                          {
+                             districtValue !== "Dhaka" ? <input type="radio" checked className="mr-1" value='130' />
+                             :
+                             <input type="radio" disabled className="mr-1" />
+                          }
                           <label htmlFor="" className="">
                             Outside Dhaka Home Delivery - 130 tk - 24/48H
                           </label>
                         </div>
 
                         <div>
-                          <input type="radio" className="mr-1" />
+
+                          {
+                            districtValue === "Dhaka" ? <input type="radio" checked value="60" className="mr-1" />
+                            :
+                            <input type="radio" className="mr-1"  />
+                          }
                           <label htmlFor="">
                             Inside Dhaka Home Delivery - 60 tk - 24/48H
                           </label>
+                          
                         </div>
 
                         <div>
@@ -244,7 +293,7 @@ const OrderForm = () => {
 
                     <tr>
                       <td className="border p-2">সর্বমোট</td>
-                      <td className="border p-2">{plus * 400} টাকা</td>
+                      <td className="border p-2">{(plus * 400) + (parseFloat(deliveryCharge))} টাকা</td>
                     </tr>
 
                     <tr>
@@ -263,14 +312,19 @@ const OrderForm = () => {
 
                      <p className="text-center text-lg">অথবা</p>
 
-                     <button className="bg-green-700 w-full my-3 py-1 rounded-md text-white font-semibold">
-                     <i class="fa-brands fa-whatsapp text-4xl mr-2 "></i>
-                     </button>
+                     
+                    
+                     
 
                 </div>
               </div>
             </div>
           </form>
+         <div className="flex justify-end mx-0 xl:mx-32 lg:mx-32 md:mx-96 mr-0 md:mr-0 lg:mr-10 xl:mr-10 ">
+         <button className="bg-green-700 w-full xl:w-6/12 lg:w-6/12 md:6/12 my-3 py-1 rounded-md text-white font-semibold">
+                      <a href="https://wa.me/01760075031"><i class="fa-brands fa-whatsapp text-4xl mr-2 "></i></a>
+         </button>
+         </div>
         </div>
       </div>
     </div>
