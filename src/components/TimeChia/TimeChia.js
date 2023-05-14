@@ -7,14 +7,14 @@ const TimeChia = () => {
   const [cardDetails, setCardDetails] = useState([]);
 
   useEffect(() => {
-    fetch("dataCard.json")
+    fetch("http://localhost:5000/nutritionalValueGet")
       .then((res) => res.json())
       .then((data) => {
         setCardDetails(data);
-        console.log(data);
+        // console.log(data);
       })
       .catch((e) => console.log(e));
-  }, []);
+  }, [cardDetails]);
 
   return (
 
@@ -27,7 +27,7 @@ const TimeChia = () => {
 
       <div className=" my-5 grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 xl:grid-cols-4 gap-3">
         {cardDetails.map((cardDetail) => (
-          <TimeChiaCardMap key={cardDetail.id} cardDetail={cardDetail} />
+          <TimeChiaCardMap key={cardDetail._id} cardDetail={cardDetail} />
         ))}
       </div>
 

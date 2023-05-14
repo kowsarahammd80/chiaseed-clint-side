@@ -1,13 +1,15 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
 export const AuthContext = createContext()
 
 const AuthProvider = ({children}) => {
 
-  const [name, setName] = useState("Shuvo")
+  // const [name, setName] = useState("Shuvo")
+
+   
     
   const info = {
-    name
+    // product
   }
     
   return (

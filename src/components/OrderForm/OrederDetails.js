@@ -1,12 +1,28 @@
 import React from "react";
 import productImage from "../../assets/chiaseed-img.jpeg";
+import UseProduct from "../../Hooks/UseProduct/UseProduct";
+import OrderFormDetailsMap from "./OrderFormDetailsMap";
 
 const OrederDetails = ({ districtValue, plusButton, minus, plus }) => {
+    
+  const [products] = UseProduct()
+
   return (
     <div className="ml-0 xl:ml-10 lg:mx-10 md:ml-10 my-5">
       {/* product image and quantity set */}
 
+      {
+        [...products].reverse().map(product => <OrderFormDetailsMap
+          key={product._id} product = {products}
+          districtValue={districtValue}
+          plusButton={plusButton}
+          minus={minus}
+        plus={plus}
+        />)
+      }
+
       <div className="flex items-center">
+
         <div className="avatar">
           <div className="w-24 rounded border">
             {/* product image */}
@@ -58,6 +74,7 @@ const OrederDetails = ({ districtValue, plusButton, minus, plus }) => {
             </div>
           </div>
         </div>
+        
       </div>
       <hr className="mb-2 mt-2" />
 
