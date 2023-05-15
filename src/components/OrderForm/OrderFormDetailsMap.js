@@ -1,28 +1,33 @@
-import React from 'react';
-import UseProduct from '../../Hooks/UseProduct/UseProduct';
+import React from "react";
 
-const OrderFormDetailsMap = ({product, districtValue, plusButton, minus, plus}) => {
+const OrderFormDetailsMap = ({
+  productsValue,
+  districtValue,
+  plusButton,
+  minus,
+  plus,
+}) => {
+  const length = productsValue.length;
+  // console.log(productsValue[length - 1]);
 
-    const {image} = product[0];
+  // const { price } = productsValue[length - 1];
 
   return (
-
-    <div className="flex items-center">
-
+    <div>
+      <div className="flex items-center">
         <div className="avatar">
           <div className="w-24 rounded border">
             {/* product image */}
-            <img src={image} />
+            <img src={productsValue[length - 1]?.image} />
           </div>
         </div>
-
         <div className="w-full ml-3">
           {/* name price */}
 
           <div className="flex justify-between w-full">
-            <p>Best Chia Seed 200 gm</p>
+            <p>{productsValue[length - 1]?.productName}</p>
 
-            <p> {400 * plus} টাকা </p>
+            <p> {productsValue[length - 1]?.price * plus} টাকা </p>
           </div>
 
           {/* quantity (+ -) button */}
@@ -31,7 +36,7 @@ const OrderFormDetailsMap = ({product, districtValue, plusButton, minus, plus}) 
             <div className="minus-button w-1/2 lg:w-1/4 flex justify-around border-set">
               {plus < 2 ? (
                 <button
-                type="button"
+                  type="button"
                   disabled
                   onClick={() => minus()}
                   className="text-white font-semibold"
@@ -60,11 +65,11 @@ const OrderFormDetailsMap = ({product, districtValue, plusButton, minus, plus}) 
             </div>
           </div>
         </div>
-        
       </div>
 
+      <hr className="mb-2 mt-2" />
+    </div>
   );
-
 };
 
 export default OrderFormDetailsMap;

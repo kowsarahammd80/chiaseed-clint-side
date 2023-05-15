@@ -4,26 +4,20 @@ import ProductMap from "./ProductMap";
 import UseProduct from "../../Hooks/UseProduct/UseProduct";
 
 
-const Product = () => {
+const Product = ({len}) => {
 
  const [products] = UseProduct()
+   
 
-  // const [productData, setProductData] = useState([])
-
-  // useEffect(() => {
-  //    fetch(`http://localhost:5000/productGet`)
-  //    .then(res=> res.json())
-  //    .then(data => setProductData(data))
-  //    .catch(e => console.log(e))
-  // },[])
-
+  let length = 0;
+  !len ? length = products.length : length = len;
 
   return (
 
     <div className="flex justify-center mx-3 lg:mx-0 xl:mx-0 md:mx-0">
 
       <div>
-        {[...products].reverse().map((product) => (
+        {[...products].reverse().slice(0, length).map((product) => (
           <ProductMap key={product._id} product={product} />
         ))}
       </div>

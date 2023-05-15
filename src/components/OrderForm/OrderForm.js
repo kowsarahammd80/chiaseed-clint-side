@@ -1,13 +1,32 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./OrderForm.css";
-// import productImage from "../../assets/chiaseed-img.jpeg";
 import OrederDetails from "./OrederDetails";
-// import { AuthContext } from "../Auth/AuthProvider/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import useClientsOrder from "../../Hooks/UseProduct/useClientsOrder";
 
 
 const OrderForm = () => {
-  
-  // const {name} = useContext(AuthContext)
+   
+  // const [clientOrders] = useClientsOrder()
+  const [productsValues, setProductsValues] = useState([]);
+  const [loading, setLoading] = useState(false)
+
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/productGet`)
+      .then((res) => res.json())
+      .then((data) => {
+        setLoading(true)
+        setProductsValues(data)
+        setLoading(false)
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+   
+  const navigate = useNavigate()
+
+  // console.log(productsValues);
 
   const [plus, setPlus] = useState(1);
 
@@ -17,7 +36,14 @@ const OrderForm = () => {
 
   const [subDistricts, setSubDistricts] = useState([]);
 
-  const DhakaDistricts = ["Mirpur", "Rampura", "Badda", "Uttora", "Dhanmondi", "Gulshan"];
+  const DhakaDistricts = [
+    "Mirpur",
+    "Rampura",
+    "Badda",
+    "Uttora",
+    "Dhanmondi",
+    "Gulshan",
+  ];
 
   const ComillaDistricts = [
     "Comilla",
@@ -57,7 +83,6 @@ const OrderForm = () => {
   };
 
   const handleDistricts = (e) => {
-
     setDistrictValue(e.target.value);
     if (e.target.value === "Dhaka") {
       setSubDistricts(DhakaDistricts);
@@ -70,47 +95,53 @@ const OrderForm = () => {
     } else if (e.target.value === "Chadpur") {
       setSubDistricts(ChadpurDistrict);
     }
-    
   };
 
-  const orderForm = (event) => {
+
+  const orderForm = (event,) => {
     event.preventDefault();
 
     const form = event.target;
 
     const data = {
-
       name: form.name.value,
       number: form.number.value,
       homeAddress: form.homeAddress.value,
       district: form.district.value,
       city: form.city.value,
-      productName: "Chiaseed",
+      productName: productsValues[productsValues.length - 1].productName,
       productQuanity: plus,
-      price: 400 * plus,
-      subTotal: 400 * plus + (districtValue === "Dhaka" ? 60 : 130),
+      price: productsValues[productsValues.length - 1].price * plus,
+      subTotal:
+        productsValues[productsValues.length - 1].price * plus +
+        (districtValue === "Dhaka" ? 60 : 130),
       delivery: districtValue === "Dhaka" ? 60 : 130,
       // shipping: "Cash on Delivery",
-      cashOnDelivery:  "Cash On Delivery",
-
+      cashOnDelivery: "Cash On Delivery",
     };
 
     fetch(`http://localhost:5000/order`, {
-        
-    method: "POST",
-    headers: {
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify(data),
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(data),
     })
-    .then((res) => res.json())
+      .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        
+        
+           navigate('/clientOrder')
+
+       
       })
       .catch((e) => console.error(e));
-
-    console.log(data);
   };
+
+  if(loading){
+    return <p>loading...</p>
+    }
 
   return (
     <div className="mx-5 lg:mx-40 xl:mx-40 md:mx-10 my-10 border-2">
@@ -120,7 +151,7 @@ const OrderForm = () => {
         <div className=" p-2">
           <div className="bg-yellow-300 test mx-0 lg:mx-10 xl:mx-10 md:mx-10">
             <h1 className="text-center text-2xl lg:text-3xl md:3xl xl:3xl p-2 font-semibold">
-              অর্ডার করতে নিচের ফর্মটি সম্পূর্ণ পূরন করুন 
+              অর্ডার করতে নিচের ফর্মটি সম্পূর্ণ পূরন করুন
             </h1>
           </div>
 
@@ -135,6 +166,8 @@ const OrderForm = () => {
             <div>
               <p className="mt-4 mb-2 font-semibold">আপনার নাম *</p>
               <input
+              
+              required
                 type="text"
                 name="name"
                 placeholder="আপনার নাম *"
@@ -144,7 +177,8 @@ const OrderForm = () => {
               <p className="mt-2 mb-2 font-semibold">ফোন নম্বর*</p>
 
               <input
-                type="text"
+              required
+                type="number"
                 name="number"
                 placeholder="ফোন নম্বর*"
                 className="input input-bordered w-full mb-2"
@@ -155,6 +189,7 @@ const OrderForm = () => {
               </p>
 
               <input
+              required
                 type="text"
                 name="homeAddress"
                 placeholder="বাসা/রোড নাম্বার, এলাকার নাম, থানা নাম *"
@@ -166,6 +201,7 @@ const OrderForm = () => {
               </p>
 
               <select
+              required
                 onChange={handleDistricts}
                 className="select select-bordered w-full mb-2"
                 name="district"
@@ -181,6 +217,7 @@ const OrderForm = () => {
               <p className="mt-2 mb-2 font-semibold">আপনার শহর সিলেক্ট করুন*</p>
 
               <select
+              required
                 className="select select-bordered w-full mb-2"
                 name="city"
               >
@@ -199,34 +236,26 @@ const OrderForm = () => {
             {/* product price show */}
 
             <OrederDetails
+              productsValues={productsValues}
               districtValue={districtValue}
               plusButton={plusButton}
               minus={minus}
               plus={plus}
+
             />
-
-
-
           </form>
 
           <div className="flex justify-end mx-0 xl:mx-32 lg:mx-32 md:mx-96 mr-0 md:mr-0 lg:mr-10 xl:mr-10 ">
-
             <button className="bg-green-700 w-full xl:w-6/12 lg:w-6/12 md:6/12 my-3 py-1 rounded-md text-white font-semibold">
               <a href="https://wa.me/01760075031">
                 <i class="fa-brands fa-whatsapp text-4xl mr-2 "></i>
               </a>
             </button>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
-
   );
-
 };
 
 export default OrderForm;

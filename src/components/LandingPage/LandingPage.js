@@ -12,16 +12,12 @@ const LandingPage = () => {
 
     <div className=''>
   
-       <HeroSection/>
+       <HeroSection len={1}/>
        <TimeChia/>
        <WhyFromTackUs/>
-       <Product/>
-       <OrderForm/>
+       <Product len={1}/>
+       <OrderForm len={1}/>
        <WhatsApp/>
-
-       {/* <div className='flex justify-end'>
-       <button className=' whatsApp '><i class="fa-brands fa-whatsapp text-4xl mr-2 "></i></button>
-    </div> */}
 
     </div>
     

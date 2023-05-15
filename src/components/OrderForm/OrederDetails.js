@@ -1,94 +1,61 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import productImage from "../../assets/chiaseed-img.jpeg";
 import UseProduct from "../../Hooks/UseProduct/UseProduct";
 import OrderFormDetailsMap from "./OrderFormDetailsMap";
+import OrderFormDetalsPage from "../../Pages/OrderFormDetalsPage";
+import { Link } from "react-router-dom";
+import useClientsOrder from "../../Hooks/UseProduct/useClientsOrder";
 
-const OrederDetails = ({ districtValue, plusButton, minus, plus }) => {
-    
-  const [products] = UseProduct()
+const OrederDetails = ({
+  productsValues,
+  districtValue,
+  plusButton,
+  minus,
+  plus,
+  _id
+}) => {
+
+
+  // const [clientOrders, loading] = useClientsOrder()
+
 
   return (
     <div className="ml-0 xl:ml-10 lg:mx-10 md:ml-10 my-5">
       {/* product image and quantity set */}
 
-      {
-        [...products].reverse().map(product => <OrderFormDetailsMap
-          key={product._id} product = {products}
-          districtValue={districtValue}
-          plusButton={plusButton}
-          minus={minus}
+      <OrderFormDetalsPage
+        len={1}
+        productsValues={productsValues}
+        districtValue={districtValue}
+        plusButton={plusButton}
+        minus={minus}
         plus={plus}
-        />)
-      }
+      />
 
-      <div className="flex items-center">
-
-        <div className="avatar">
-          <div className="w-24 rounded border">
-            {/* product image */}
-            <img src={productImage} />
-          </div>
-        </div>
-
-        <div className="w-full ml-3">
-          {/* name price */}
-
-          <div className="flex justify-between w-full">
-            <p>Best Chia Seed 200 gm</p>
-
-            <p> {400 * plus} টাকা </p>
-          </div>
-
-          {/* quantity (+ -) button */}
-
-          <div className="mt-5">
-            <div className="minus-button w-1/2 lg:w-1/4 flex justify-around border-set">
-              {plus < 2 ? (
-                <button
-                type="button"
-                  disabled
-                  onClick={() => minus()}
-                  className="text-white font-semibold"
-                >
-                  <i class="fa-solid fa-minus"></i>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => minus()}
-                  className="text-white font-semibold"
-                >
-                  <i class="fa-solid fa-minus"></i>
-                </button>
-              )}
-
-              <span className="bg-white px-2">{plus}</span>
-
-              <button
-                type="button"
-                onClick={() => plusButton()}
-                className="text-white font-semibold"
-              >
-                <i class="fa-solid fa-plus"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-        
-      </div>
       <hr className="mb-2 mt-2" />
 
       {/* total price and order method */}
 
       <div className="w-full">
+
         <div>
+
           <table className="border w-full">
+
             <tr className="">
+
               <td className="border w-1/4 p-2">সাবটোটাল</td>
+
               <td>
-                <p className="ml-1"> {plus * 400} টাকা</p>
-                
+
+                <p className="ml-1">
+                  
+                  {" "}
+                  {plus * productsValues[productsValues.length - 1]?.price} টাকা
+                </p>
+
               </td>
+
             </tr>
 
             <tr>
@@ -146,8 +113,11 @@ const OrederDetails = ({ districtValue, plusButton, minus, plus }) => {
 
             <tr>
               <td className="border p-2">সর্বমোট</td>
-              <td className="border p-2"> 
-                  <p className="w-full"> {plus * 400 + (districtValue === "Dhaka" ? 60 : 130)}  টাকা</p>
+              <td className="border p-2">
+                <p className="w-full">
+                  {" "}
+                  {plus * productsValues[productsValues.length - 1]?.price + (districtValue === "Dhaka" ? 60 : 130)} টাকা
+                </p>
               </td>
             </tr>
 
@@ -155,20 +125,29 @@ const OrederDetails = ({ districtValue, plusButton, minus, plus }) => {
               <td className="border p-2">পেমেন্ট মাধ্যম</td>
 
               <td className="border p-2">
-
-                <input name="cashOnDelivery" value="Cash on Delivery" type="radio" checked className="mr-1" />
+                <input
+                  name="cashOnDelivery"
+                  value="Cash on Delivery"
+                  type="radio"
+                  checked
+                  className="mr-1"
+                />
 
                 <label htmlFor="">Cash on Delivery</label>
               </td>
             </tr>
           </table>
 
-          <button
+
+                
+           <button 
             type="submit"
             className="bg-green-700 w-full my-3 py-3 rounded-md text-white font-semibold"
-          >
+           >
             Order Now
-          </button>
+           </button>
+
+         
 
           <p className="text-red-500 text-justify">
             ঢাকার বাইরে অর্ডার করলে ডেলিভারি চার্জ অবশ্যই অগ্রিম দিতে হবে এবং
@@ -179,7 +158,9 @@ const OrederDetails = ({ districtValue, plusButton, minus, plus }) => {
 
           <p className="text-center text-lg">অথবা</p>
         </div>
+
       </div>
+
     </div>
   );
 };
